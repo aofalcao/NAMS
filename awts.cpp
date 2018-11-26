@@ -184,7 +184,7 @@ firstly it will compute the atom matrices and
 		//generate the weights
 		sumw=0;
 		for(int a=0;a<natoms1; a++) {
-			rnd=((float)rand()) / (RAND_MAX + 1); //values between 0 and 1.0
+			rnd=((float)rand()) / (RAND_MAX ); //values between 0 and 1.0
 			if(i>0) {
 				wts[a]=fabsf(init_wts[a] + 2.0f*rnd*spread - spread); //no negative weights ever!
 				//if(wts[a]>2.0f) wts[a]=2.0f;
