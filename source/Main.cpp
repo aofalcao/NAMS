@@ -103,9 +103,9 @@ char sw[]="Atom Weights: (modes 0,1 and 4)\n\
 
 
 	puts(s1);
-	puts(o4);	//to remove
+	//puts(o4);	//to remove
 	puts(s2);
-	puts(sw);	//to remove
+	//puts(sw);	//to remove
 	puts(s3);
 
 	return 1;
@@ -227,9 +227,9 @@ int main(int argc, char *argv[])
 			case 3:
 				mode = LIST_AGAINST_LIST;
 				break;
-			case 4:   //to remove
-				mode = MOL_AGAINST_LIST_W;
-				break;
+			//case 4:   //to remove
+			//	mode = MOL_AGAINST_LIST_W;
+			//	break;
 		}
 	}
 	if(pin > 0) {
@@ -311,7 +311,7 @@ int main(int argc, char *argv[])
 	if(mode == MOL_AGAINST_LIST) MoleculeAgainstList(fname1, fname2, &parms, S,L,J,M,A, fmin_mol_wt, fmax_mol_wt, filt_db, iwtsFname, silence);
 	if(mode == LIST_AGAINST_ITSELF) ListAgainstItself(fname2, &parms, S,L,J,M,A, fmin_mol_wt, fmax_mol_wt, filt_in, filt_db, silence); 
 	if(mode == LIST_AGAINST_LIST) ListAgainstList(fname1, fname2, &parms, S,L,J,M,A, fmin_mol_wt, fmax_mol_wt, filt_in, filt_db,silence); 
-	if(mode == MOL_AGAINST_LIST_W) GenerateAtomWeights(fname1, fname2, &parms, J, filt_db, nruns, owtsFname, iwtsFname, spread); 
+	//if(mode == MOL_AGAINST_LIST_W) GenerateAtomWeights(fname1, fname2, &parms, J, filt_db, nruns, owtsFname, iwtsFname, spread); 
 
 	
 	end = clock();
