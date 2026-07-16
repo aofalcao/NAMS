@@ -1,0 +1,22 @@
+# MSVC Makefile for NAMS
+CXX = cl.exe
+CXXFLAGS = /EHsc /O2 /std:c++14 /W3
+
+# Add any specific source files here. 
+# Typically NAMS consists of main.cpp and auxiliary cpp files.
+# Replace these with the actual list of .cpp files in the repo if needed.
+
+SRCS = Main.cpp hungarian.cpp awts.cpp nams.cpp
+OBJS = $(SRCS:.cpp=.obj)
+TARGET = nams.exe
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	link.exe /OUT:$(TARGET) $(OBJS)
+
+.cpp.obj:
+	$(CXX) $(CXXFLAGS) /c $<
+
+clean:
+	del *.obj $(TARGET)
