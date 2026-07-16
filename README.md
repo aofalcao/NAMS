@@ -62,7 +62,80 @@ The above will create 3 databases, 2 with 1 molecule (for aspirin and ibuprofen 
 
 ## Using NAMS
 
-### Comparing 2 molecules
+### NAMS Options
+
+calling the help file will give all the available NAMS parameters:
+
+```
+$ nams -help 
+NAMS - Non-contiguous atom matching structural similarity function
+nams version - 0.99.20260716
+This program will compare one or several molecules against others producing
+a similarity score for each pair of molecules
+Basic use:
+nams -mode [mode] -in [mol_filename] -db [mod db filename]
+NOTE: -mode, and -db are required options
+Details
+    -in [filename] filename is the name of a file in the NAMS format with one
+       or more molecules
+    -db [filename] filename is the name of a file in the NAMS format with one
+        or more molecules
+    -mode: Operation mode - must follow a value: 1,2,3 or 4
+        1 - Compares one molecule (given with the -in option) with a full
+            database (-db)
+        2 - Compares a database with itself. All molecules of db are compared
+            to all the others in the database
+        3 - Compares a list of molecules (-in) with all the molecules in (-db)
+    -opts [AJLMS] Output options. Each of these 5 letters or combinations may
+            be used. If options A or M are absent results are provided in a table
+            [default -JLS - if -opts present all is reset]
+        M - Presents the atom matching scores for all atom pairs for both
+            molecules
+        A - Gives the optimum matching between atoms of both molecules.
+            Each atom pair is identified by their atom ID and the
+            corresponding matching score
+        L - Self similarity scores of both molecules [default]
+        S - Similarity score between both molecules [default]
+        J - Jaccard score between both molecules [default]
+Filter parameters:
+    -tj [value] - presents only the results above a given Jaccard threshold
+    -fdb [filename] -defines a filename that includes the molids to search within
+             the database, as specified by -db
+    -fin [filename] -defines a filename that includes the molids to search within
+             the NAMS input file, as specified by -in
+    -fmxmw [value] - the maximum molecular %weight difference to search within the
+             database [default=9999]
+    -fmnmw [value] - the minimum molecular %weight difference to search within the
+             database [default=100]
+NAMS Heuristic parameters:
+    -alpha [value] - alpha parameter of the model [default=0.9]
+    -nrings [value] - score that acounts for how many rings an atom belongs
+           [default=0.80]
+    -stiso [value] - parameter for accountin chiral stereo isomerism
+           [default=0.95]
+    -ctiso [value] - accounts for double bond cis-trans isomerisms
+           [default=0.95]
+    -bring [value] - whether a bond is in a ring or not [default=0.90]
+    -barom [value] - whether a bond is in an aromatic ring or not
+           [default = 0.90]
+    -border [value] - bond covalent order [default=0.90]
+    -pen [value] - penalty factor to account for unmatched bonds
+           [default= 1.0]
+    -ADM [code] - atom distance matrix code. Admissible values are 0,1,2, 3 and 4
+           [default=3]
+(c) Andre Falcao 2013-2026
+    This Program is provided free of charge and WITHOUT ANY WARRANTY
+  if used please cite:
+     AL Teixeira, AO Falcao. 2013. Non contiguous atom matching structural similarity
+     function DOI: 10.1021/ci400324u. Journal of Chemical Information and Modeling
+```
+Despite its dounting options there are essentially 3 modes of Using NAMS
+
+* `-mode 1` - Compares one molecule to a database and alseo another allowing very detailed output 
+* `-mode 2` - Compares a database to itself, producing a table with the similarity of each molecule to every other one (essentiaaly constructing a similarities matrix)
+* `-mode 3` - Compares 2 databases
+
+### MODE 1 - Comparing 2 molecules
 
 One can compute 2 molecules alone directly using option 1
 ```
@@ -119,6 +192,36 @@ Number of molecular alignments performed: 1
 Time required for execution: 0.009000 seconds
 ```
 
+### MODE 1 - comparing one molecule to a database
+
+Mode 1 still allow us to get a table for comparing one molecule (ibuprofen) against all amino acids
+```
+Snams -in data\ibuprofen.nams -db data\aminoacids.nams -mode 1
+    molid1      molid2     ss1     ss2   sim12   Sscore
+         2         1 168.889  27.079  21.960  0.1262
+         2         2 168.889 100.559  54.165  0.2516
+         2         3 168.889  60.439  37.182  0.1935
+         2         4 168.889  60.439  36.788  0.1911
+         2         5 168.889  36.939  25.018  0.1384
+         2         6 168.889  73.139  45.570  0.2320
+         2         7 168.889  73.139  45.208  0.2297
+         2         8 168.889  18.319  14.133  0.0817
+         2         9 168.889  97.169  58.974  0.2848
+         2        10 168.889  61.039  44.712  0.2414
+         2        11 168.889  60.439  44.370  0.2399
+         2        12 168.889  72.179  50.166  0.2628
+         2        13 168.889  59.579  35.774  0.1857
+         2        14 168.889 113.769 101.187  0.5576
+         2        15 168.889  55.179  36.906  0.1972
+         2        16 168.889  36.939  25.298  0.1401
+         2        17 168.889  48.579  32.818  0.1777
+         2        18 168.889 183.359 120.515  0.5201
+         2        19 168.889 131.169 109.468  0.5744
+         2        20 168.889  48.579  35.813  0.1971
+Number of molecular alignments performed: 20
+Time required for execution: 0.017000 seconds
+```
+we can see that the closest symilarity is to amino acid 19 (Typrosine) as expected, even though Phenylalanine and Tryptophan are also close
 
 
 # Older Tutorials using R and RStudio
